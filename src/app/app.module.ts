@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,11 +17,13 @@ import { NavigationMobileComponent } from './frontend/navigation-mobile/navigati
     NavigationComponent,
     HomeComponent,
     HamMenuComponent,
-    NavigationMobileComponent
+    NavigationMobileComponent,
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

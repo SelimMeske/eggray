@@ -1,1 +1,3 @@
-<p>navigation-mobile works!</p>
+<div class="flex">
+    <div *ngFor="let item of menu_links" [style.transition-delay]="oc_menu ? '' : '0s'" [class.open]="oc_menu" class="nav-menu-full">{{ item }}</div>
+</div>

@@ -1,6 +1,7 @@
 <div class="flex">
     <div *ngFor="let item of menu_links" class="nav-menu-full">{{ item }}</div>
     <div class="nav-menu-small">
-        <app-ham-menu></app-ham-menu>
+        <app-ham-menu (click)="toggle_mobile_menu()"></app-ham-menu>
     </div>
 </div>
+<app-navigation-mobile [oc_menu]="oc_menu_output" [@openClose]="oc_menu ? 'open' : 'closed'" ></app-navigation-mobile>
