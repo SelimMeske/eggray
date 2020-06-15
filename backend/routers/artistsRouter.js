@@ -14,7 +14,7 @@ connection.connect(error => {
     console.log('Database connected.')
 });
 
-router.post('/', (req, res, next) => { 
+router.post('', (req, res, next) => { 
 
     let artist = {
         name: req.body.name,

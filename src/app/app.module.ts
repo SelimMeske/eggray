@@ -9,6 +9,12 @@ import { NavigationComponent } from './frontend/navigation/navigation.component'
 import { HomeComponent } from './frontend/pages/home/home.component';
 import { HamMenuComponent } from './frontend/components/ham-menu/ham-menu.component';
 import { NavigationMobileComponent } from './frontend/navigation-mobile/navigation-mobile.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { MainInterceptor } from './services/main.interceptor';
+import { AddUserComponent } from './backend/add-user/add-user.component';
+import { AdminPanelComponent } from './backend/admin-panel/admin-panel.component';
+import { AuthGuardService } from './services/auth_guard/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -18,14 +24,18 @@ import { NavigationMobileComponent } from './frontend/navigation-mobile/navigati
     HomeComponent,
     HamMenuComponent,
     NavigationMobileComponent,
-    
+    AddUserComponent,
+    AdminPanelComponent
   ],
+
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: MainInterceptor, multi: true}, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

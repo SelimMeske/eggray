@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('mysql');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const jwtMiddle = require('../middlewares/jwt-verification');
 
 const connection = db.createConnection({
     database: 'eggray',
@@ -15,13 +17,14 @@ connection.connect(error => {
     console.log('Database connected.')
 });
 
-router.post('/', (req, res, next) => {
-
+router.post('/', jwtMiddle, (req, res, next) => {
+    
     let user = {
         name: req.body.name,
         password: req.body.password
     }
 
+    console.log(req.body)
     const command = 'INSERT INTO admins SET name = ?, password = ?';
 
     bcrypt.hash(user.password, 10, (err, hash) => {
@@ -40,7 +43,7 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.get('/', (req, res, next) => {
+router.post('/login', (req, res, next) => {
 
     let user = {
         name: req.body.name,
@@ -77,8 +80,12 @@ router.get('/', (req, res, next) => {
                 })
             }
 
+            let webToken = jwt.sign({name: dbUser.name}, 'this_is_very_secret', {expiresIn: '1h'})
+
             res.status(200).json({
-                message: 'User is authorised.'
+                message: 'User is authorised.',
+                expiresIn: '3600',
+                token: webToken
             });
 
         });
