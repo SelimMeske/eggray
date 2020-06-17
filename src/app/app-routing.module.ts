@@ -10,8 +10,8 @@ import { AuthGuardService } from './services/auth_guard/auth-guard.service';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'admin', component: AdminLoginComponent},
-  {path: 'panel', component: AdminPanelComponent, canActivate: [AuthGuardService]},
-  {path: 'add-user', component: AddUserComponent, canActivate: [AuthGuardService]}
+  {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuardService]},
+  {path: 'admin-add-user', component: AddUserComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({

@@ -1,0 +1,7 @@
+<div class="flex">
+    <form #addUserForm="ngForm" (submit)="addUser(addUserForm)">
+        <input ngModel name="name" type="text" required>
+        <input ngModel name="password" type="text" required minlength='6'>
+        <button type="submit">Add User</button>
+    </form>
+</div>

@@ -28,8 +28,6 @@ import { EventEmitter } from 'events';
 })
 export class NavigationComponent implements OnInit {
   
-  
-  
   menu_links: string[] = [
     'home',
     'artists',
@@ -38,11 +36,22 @@ export class NavigationComponent implements OnInit {
     'about'
   ]
 
+  sticky_nav = false;
   oc_menu: boolean = false;
   @Output() oc_menu_output = false;
   constructor() { }
 
   ngOnInit(): void {
+
+    window.addEventListener('scroll', () => {
+      if(window.scrollY <= 55){
+        this.sticky_nav = false;
+      }else{
+        this.sticky_nav = true;
+      }
+      
+      console.log(this.sticky_nav)
+    });
   }
 
   toggle_mobile_menu(){

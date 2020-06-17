@@ -25,7 +25,7 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
     });
 
     if(this.userAuthorized){
-      this.router.navigate(['/panel']);
+      this.router.navigate(['/admin-panel']);
     }
   }
 

@@ -17,11 +17,10 @@ export class NavigationMobileComponent implements OnInit {
     'albums',
     'about'
   ]
-
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.oc_menu)
+  
   }
 
 }
