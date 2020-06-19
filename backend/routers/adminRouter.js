@@ -24,7 +24,6 @@ router.post('/', jwtMiddle, (req, res, next) => {
         password: req.body.password
     }
 
-    console.log(req.body)
     const command = 'INSERT INTO admins SET name = ?, password = ?';
 
     bcrypt.hash(user.password, 10, (err, hash) => {
@@ -85,7 +84,8 @@ router.post('/login', (req, res, next) => {
             res.status(200).json({
                 message: 'User is authorised.',
                 expiresIn: '3600',
-                token: webToken
+                token: webToken,
+                userName: dbUser.name
             });
 
         });

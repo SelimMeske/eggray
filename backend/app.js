@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const artistsRouter = require('./routers/artistsRouter');
 const usersRouter = require('./routers/adminRouter');
 const cors = require('cors');
+const path = require('path');
+
+app.use("/images", express.static(path.join(__dirname, 'backend/images')));
 
 app.use(cors());
 app.use(bodyParser.json());

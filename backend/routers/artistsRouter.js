@@ -1,6 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const db = require('mysql');
+const multer = require('multer');
+
+MIME_TYPE_MAP = {
+    'image/jpg': 'jpg',
+    'image/jpeg': 'jpeg',
+    'image/png' : 'png'
+}
+
+let config = multer.diskStorage({
+    
+    destination: (req, file, cb) => {
+        let error = null;
+        if(!MIME_TYPE_MAP[file.mimetype]){
+            error = new Error('Wrong mime-type');
+        }
+        cb(error, 'images')
+    },
+    
+    filename: (req, file, cb) => {
+        let ext = MIME_TYPE_MAP[file.mimetype];
+        let name = file.originalname.toLocaleLowerCase().split(' ').join('-');
+        cb(null, name + '-' + Date.now() + '.' + ext)
+    }
+})
 
 const connection = db.createConnection({
     database: 'eggray',
@@ -14,14 +38,14 @@ connection.connect(error => {
     console.log('Database connected.')
 });
 
-router.post('', (req, res, next) => { 
-
+router.post('', multer({storage: config}).single('image'), (req, res, next) => { 
+    
     let artist = {
         name: req.body.name,
         content: req.body.content,
-        image: req.body.image
+        image: req.protocol + '://www.' + req.get('host') + '/images/'+ req.file.filename
     }
-
+    
     const command = 'INSERT INTO artists SET name = ?, content = ?, image = ?';
 
     connection.query(command, [artist.name, artist.content, artist.image], (err, response) => {

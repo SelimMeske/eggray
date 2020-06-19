@@ -5,13 +5,15 @@ import { AdminLoginComponent } from './backend/admin-login/admin-login.component
 import { AdminPanelComponent } from './backend/admin-panel/admin-panel.component';
 import { AddUserComponent } from './backend/add-user/add-user.component';
 import { AuthGuardService } from './services/auth_guard/auth-guard.service';
+import { AddArtistComponent } from './backend/add-artist/add-artist.component';
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'admin', component: AdminLoginComponent},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuardService]},
-  {path: 'admin-add-user', component: AddUserComponent, canActivate: [AuthGuardService]}
+  {path: 'admin-add-user', component: AddUserComponent, canActivate: [AuthGuardService]},
+  {path: 'admin-add-artist', component: AddArtistComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({

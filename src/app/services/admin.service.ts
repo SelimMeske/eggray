@@ -13,6 +13,7 @@ export class AdminService {
   userAuthorised: boolean = false;
   userAuthStatus = new Subject<boolean>();
   userToken: string;
+  adminUserName = new Subject<string>();
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -23,28 +24,32 @@ export class AdminService {
       password: password
     }
 
-    this.http.post<{message:string, token:string, expiresIn: string}>(this.env.SERVER_URL + '/login', user).subscribe(response => {
+    this.http.post<{message:string, token:string, expiresIn: string, userName: string}>(this.env.SERVER_URL + 'users/login', user).subscribe(response => {
       if(response){
         this.userAuthorised = true;
         this.userAuthStatus.next(true);
+        this.adminUserName.next(response.userName);
         let current_time = new Date().getTime() + (+response.expiresIn * 1000);
         let timeoutTime = current_time - new Date().getTime();
         this.tokenTimer(timeoutTime);
-        this.saveToLocal(response.token, new Date(current_time));
+        this.saveToLocal(response.token, new Date(current_time), response.userName);
         this.router.navigate(['/admin-panel']);
       }
     });
   }
   
+  getAdminUserName(){
+    return this.adminUserName.asObservable();
+  }
+  
   createUser(name: string, password: string){
 
-    this.http.post(this.env.SERVER_URL, {name: name, password: password}).subscribe(response => {
+    this.http.post(this.env.SERVER_URL + 'users', {name: name, password: password}).subscribe(response => {
       console.log(response);
     }); 
   }
 
   tokenTimer(time){
-    console.log(time)
     setTimeout(() => {
       this.logout();
     }, time);
@@ -57,21 +62,22 @@ export class AdminService {
     this.router.navigate(['/admin']);
   }
 
-  saveToLocal(token: string, time: Date){
+  saveToLocal(token: string, time: Date, user: string){
     localStorage.setItem('token', token);
     localStorage.setItem('date', time.toISOString());
+    localStorage.setItem('user', user);
   }
 
   clearFromLocal(){
     localStorage.removeItem('token');
     localStorage.removeItem('date');
+    localStorage.removeItem('user');
   }
 
   autoLogin(){
 
     let token = this.getLocalStorage().token;
     let inFuture = new Date(this.getLocalStorage().date).getTime() - new Date().getTime();
-    console.log('is in future ' + inFuture)
 
     if(!token){
       return;
@@ -81,14 +87,13 @@ export class AdminService {
 
       this.userAuthStatus.next(true);
       this.userAuthorised = true;
+      this.adminUserName.next(this.getLocalStorage().user);
       this.tokenTimer(inFuture);
 
     }else{
-      console.log('loggged')
       this.logout();
       this.clearFromLocal();
-
-    }   
+    } 
   }
 
   listenUserAuthStatus(){
@@ -102,7 +107,8 @@ export class AdminService {
   getLocalStorage() {
     return {
       token: localStorage.getItem('token'),
-      date: localStorage.getItem('date')
+      date: localStorage.getItem('date'),
+      user: localStorage.getItem('user')
     }
   }
 }

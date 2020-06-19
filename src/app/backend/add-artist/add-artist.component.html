@@ -1,0 +1,10 @@
+<form [formGroup]="artist_form" class="flex" style="flex-direction: column;" (submit)="save_post()">
+    <label>Artist name</label>
+    <input formControlName="title" type="text">
+    <label>Content</label>
+    <input formControlName="content" type="text">
+    <button type="button" (click)="inputImage.click()">Add Image</button>
+    <input (change)="onImageChange($event)" #inputImage style="display: none;" type="file">
+    <button type="submit">Save post</button>
+</form>
+<img class="previewImage" [src]="image_preview" alt="">

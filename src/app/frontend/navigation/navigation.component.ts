@@ -1,6 +1,8 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { EventEmitter } from 'events';
+import { AdminService } from 'src/app/services/admin.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -28,6 +30,8 @@ import { EventEmitter } from 'events';
 })
 export class NavigationComponent implements OnInit {
   
+  @Input() adminName;
+  
   menu_links: string[] = [
     'home',
     'artists',
@@ -42,21 +46,20 @@ export class NavigationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
+    
     window.addEventListener('scroll', () => {
       if(window.scrollY <= 55){
         this.sticky_nav = false;
       }else{
         this.sticky_nav = true;
       }
-      
-      console.log(this.sticky_nav)
     });
+    
   }
-
+  
   toggle_mobile_menu(){
     this.oc_menu = !this.oc_menu;
     this. oc_menu_output = this.oc_menu;
   }
-
+  
 }

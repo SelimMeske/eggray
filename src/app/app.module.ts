@@ -15,6 +15,8 @@ import { MainInterceptor } from './services/main.interceptor';
 import { AddUserComponent } from './backend/add-user/add-user.component';
 import { AdminPanelComponent } from './backend/admin-panel/admin-panel.component';
 import { AuthGuardService } from './services/auth_guard/auth-guard.service';
+import { AddArtistComponent } from './backend/add-artist/add-artist.component';
+import { ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { AuthGuardService } from './services/auth_guard/auth-guard.service';
     HamMenuComponent,
     NavigationMobileComponent,
     AddUserComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    AddArtistComponent
   ],
 
   imports: [
@@ -33,7 +36,8 @@ import { AuthGuardService } from './services/auth_guard/auth-guard.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: MainInterceptor, multi: true}, AuthGuardService],
   bootstrap: [AppComponent]
