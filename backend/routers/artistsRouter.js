@@ -38,17 +38,18 @@ connection.connect(error => {
     console.log('Database connected.')
 });
 
-router.post('', multer({storage: config}).single('image'), (req, res, next) => { 
-    
+router.post('', multer({storage: config}).array('image'), (req, res, next) => { 
+
     let artist = {
         name: req.body.name,
         content: req.body.content,
-        image: req.protocol + '://www.' + req.get('host') + '/images/'+ req.file.filename
+        image: req.protocol + '://www.' + req.get('host') + '/images/'+ req.files[0].filename,
+        post_image: req.protocol + '://www' + req.get('host') + '/images/' + req.files[1].filename
     }
     
-    const command = 'INSERT INTO artists SET name = ?, content = ?, image = ?';
+    const command = 'INSERT INTO artists SET name = ?, content = ?, image = ?, post_image = ?';
 
-    connection.query(command, [artist.name, artist.content, artist.image], (err, response) => {
+    connection.query(command, [artist.name, artist.content, artist.image, artist.post_image], (err, response) => {
         if(err) throw err;
 
         res.status(200).json({

@@ -1,9 +1,10 @@
 <div class="flex">
+    <h1>Team Eggray.</h1>
     <img src="assets/logo.png" alt="">
     <h2>Welcome Admin!</h2>
     <small><i>It's time for some fresh content?</i></small>
-    <form  #adminForm="ngForm" (submit)="login(adminForm)">
-        <input required ngModel name="name" type="text" placeholder="Enter your username.">
+    <form class="inputs" #adminForm="ngForm" (submit)="login(adminForm)">
+        <input required autocomplete="disable" ngModel name="name" type="text" placeholder="Enter your username.">
         <input required ngModel name="password" type="password" placeholder="Enter your password.">
         <button type="submit">Login</button>
     </form>

@@ -36,10 +36,8 @@ export class AppComponent implements OnInit{
           this.inBackend = false;
         }
       }
-    });
-
-    
-    
+    }); 
+  
   }
 
 }

@@ -3,8 +3,10 @@
     <input formControlName="title" type="text">
     <label>Content</label>
     <input formControlName="content" type="text">
-    <button type="button" (click)="inputImage.click()">Add Image</button>
+    <button class="add-img-btn" type="button" (click)="inputImage.click()">Add Post Image</button>
+    <button class="add-img-btn" type="button" (click)="inputPostImage.click()">Add Artist Image</button>
     <input (change)="onImageChange($event)" #inputImage style="display: none;" type="file">
+    <input (change)="onPostImageChange($event)" style="display: none;" #inputPostImage type="file">
     <button type="submit">Save post</button>
 </form>
 <img class="previewImage" [src]="image_preview" alt="">
