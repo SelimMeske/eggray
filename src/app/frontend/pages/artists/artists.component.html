@@ -1,0 +1,9 @@
+<div class="separator"></div>
+<div class="flex">
+    <div class="pusher flex">
+        <div *ngFor="let post of posts; index as i" class="card" [class.addPadding]="i % 2 == 0">
+            <img src="{{post.post_image}}" alt="">
+            <p class="name">{{post.name}}</p>
+        </div>
+    </div>
+</div>

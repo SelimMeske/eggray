@@ -82,7 +82,7 @@ router.post('/login', (req, res, next) => {
             let webToken = jwt.sign({name: dbUser.name}, 'this_is_very_secret', {expiresIn: '1h'})
 
             res.status(200).json({
-                message: 'User is authorised.',
+                message: 'Wellcome back, '+ dbUser.name,
                 expiresIn: '3600',
                 token: webToken,
                 userName: dbUser.name

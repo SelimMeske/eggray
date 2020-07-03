@@ -15,7 +15,6 @@ export class MainInterceptor implements HttpInterceptor{
         let request = req.clone({
             headers: req.headers.set('Authorization', 'bearer ' + token) 
         })
-        console.log(request)
         return next.handle(request);
     }
 

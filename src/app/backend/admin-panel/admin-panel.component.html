@@ -1,5 +1,32 @@
-<div class="flex" style="flex-direction: column;">
-    <a routerLink="/admin-add-user">Add new user</a>
-    <a (click)="logout()">Logout</a>
-    <a routerLink="/admin-add-artist">Add Artist</a>
+<div class="flex main">
+    <div class="flex toolbar" style="flex-direction: column;">
+        <div class="toolbar-options toggle-toolbar-options" style="flex-direction: column;">
+            <div class="toolbar-option main-sub-option">
+                <img src="assets/microphone.png" alt="">
+                <p>Artist posts</p>
+            </div>
+            <div routerLink="all-posts" class="toolbar-option toolbar-sub-option">
+                <p>All artist posts</p>
+            </div>
+            <div routerLink="add-artist" class="toolbar-option toolbar-sub-option">
+                <p>Add artist</p>
+            </div>
+        </div>
+        <div class="toolbar-options toggle-toolbar-options" style="flex-direction: column;">
+            <div class="toolbar-option main-sub-option">
+                <img src="assets/administrator.png" alt="">
+                <p>Administrator options</p>
+            </div>
+            <div routerLink="add-user" class="toolbar-option toolbar-sub-option">
+                <p>Add admin</p>
+            </div>
+        </div>
+        <div (click)="logout()" class="toolbar-option">
+            <img src="assets/logout.png" alt="">
+            <p>Logout</p>
+        </div>
+    </div>
+    <div class="flex dashboard">
+        <router-outlet></router-outlet>
+    </div>
 </div>

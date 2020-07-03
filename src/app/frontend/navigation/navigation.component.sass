@@ -1,16 +1,23 @@
 :host
     width: 100%
     display: flex
-    flex-direction: column
+    flex-direction: column    
 .admin-bar
     background: #0000006c !important
     height: 25px !important
+.nav-menu-full
+    padding: 2px 8px
+    transition-duration: 0.5s
+    cursor: pointer
+.nav-menu-full:hover
+    background: var(--primary-font)    
+    color: black
 .backend-link:hover
     cursor: pointer
 .flex
-    justify-content: space-evenly !important
+    justify-content: center !important
     height: 55px
-    background: var(--primary-background)
+    background: #242424
     z-index: 44    
     position: fixed
 /* Extra small devices (phones, 600px and down) */
@@ -26,6 +33,9 @@
     .nav-menu-small
         display: none !important
     app-navigation-mobile
-        display: none !important   
+        display: none !important 
+    .pusher
+        justify-content: space-between !important  
+        
 app-navigation-mobile
     background: var(--primary-background)

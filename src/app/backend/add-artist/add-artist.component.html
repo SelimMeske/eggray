@@ -1,12 +1,33 @@
-<form [formGroup]="artist_form" class="flex" style="flex-direction: column;" (submit)="save_post()">
+<form [formGroup]="artist_form" class="flex" style="flex-direction: column;">
     <label>Artist name</label>
     <input formControlName="title" type="text">
     <label>Content</label>
-    <input formControlName="content" type="text">
-    <button class="add-img-btn" type="button" (click)="inputImage.click()">Add Post Image</button>
-    <button class="add-img-btn" type="button" (click)="inputPostImage.click()">Add Artist Image</button>
+    <textarea formControlName="content" type="text" class="content"></textarea>
     <input (change)="onImageChange($event)" #inputImage style="display: none;" type="file">
     <input (change)="onPostImageChange($event)" style="display: none;" #inputPostImage type="file">
-    <button type="submit">Save post</button>
+    <div style="display: flex;">
+        <button *ngIf="!currentPost" (click)="savePost('0')" style="margin-right: 20px" class="backend-btn" type="button">Publish post</button>
+        <button *ngIf="currentPost?.draft === 'Draft'" (click)="updatePost('0')" style="margin-right: 20px" class="backend-btn" type="button">Publish post</button>
+        <button *ngIf="currentPost?.draft === 'Published'" (click)="updatePost('0')" style="margin-right: 20px" class="backend-btn" type="button">Update post</button>
+
+        <button *ngIf="!currentPost" (click)="savePost('1')" style="background: gray; border-color: gray;" class="backend-btn" type="button">Save as draft</button>
+        <button *ngIf="currentPost" (click)="updatePost('1')" style="background: gray; border-color: gray;" class="backend-btn" type="button">Save as draft</button>
+       
+        <button *ngIf="currentPost" (click)="deletePost(currentPost?.id)" style="background: rgb(255, 58, 58); border-color: rgb(255, 70, 70);" class="backend-btn" type="button">DELETE</button>
+    </div>
+    
 </form>
-<img class="previewImage" [src]="image_preview" alt="">
+<div class="section-two flex" style="flex-direction: column;" >
+    <div class="images-preview-section flex" style="flex-direction: column; ">
+        <div class="wrapper">
+            <h3>Artist image</h3>
+            <img *ngIf="artistImagePreview" [src]="artistImagePreview">
+            <button class="backend-btn" type="button" (click)="inputImage.click()">Add Post Image</button>
+        </div>
+        <div class="wrapper">
+            <h3>Post image</h3>
+            <img *ngIf="postImagePreview" [src]="postImagePreview">
+            <button class="backend-btn" type="button" (click)="inputPostImage.click()">Add Artist Image</button>
+        </div>
+    </div>
+</div>

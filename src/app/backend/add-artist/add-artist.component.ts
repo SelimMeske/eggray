@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { mimeType } from '../mime-type.validator';
 import { PostService } from 'src/app/services/post.service';
+import { AdminService } from 'src/app/services/admin.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-artist',
@@ -9,13 +11,21 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./add-artist.component.sass']
 })
 export class AddArtistComponent implements OnInit {
-
-  image_preview;
-  post_image_preview;
+  
+  currentPostId: string;
+  mainButtonText: string = 'Publish post';
+  currentPost;
+  mode: string = 'add';
+  adminUserName: string;
+  artistImagePreview;
+  postImagePreview;
   artist_form: FormGroup;
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService, private adminService: AdminService, private router: ActivatedRoute, private router_: Router) { }
 
   ngOnInit(): void {
+    let id = this.router.snapshot.paramMap.get('id');
+  
+    this.adminUserName = localStorage.getItem('user');
 
     this.artist_form = new FormGroup(
       {
@@ -25,7 +35,20 @@ export class AddArtistComponent implements OnInit {
       image: new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType]}),
       post_image: new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType]})
     })
-
+    
+    if(id){
+      this.currentPostId = id;
+      this.mode = 'edit';
+      this.postService.getSinglePost(+id).subscribe(data => {
+        this.currentPost = data;
+        this.artist_form.setValue({title: this.currentPost.name, content: this.currentPost.content, image: this.currentPost.image, post_image: this.currentPost.post_image});
+        this.artistImagePreview = this.currentPost.image;
+        this.postImagePreview = this.currentPost.post_image;
+      });
+      
+    }else{
+      this.mode = 'add';
+    }
   }
 
   onImageChange(event: Event){
@@ -36,7 +59,7 @@ export class AddArtistComponent implements OnInit {
     let reader = new FileReader();
     reader.readAsDataURL(image);
     reader.onload = () => {
-      this.image_preview = reader.result as string;
+      this.artistImagePreview = reader.result as string;
     }
   }
   
@@ -48,19 +71,37 @@ export class AddArtistComponent implements OnInit {
     let reader = new FileReader();
     reader.readAsDataURL(image);
     reader.onload = () => {
-      this.post_image_preview = reader.result;
+      this.postImagePreview = reader.result;
     };
   }
 
-  save_post(){
+  savePost(draft: string){
     let artist = {
       title: this.artist_form.value.title, 
       content: this.artist_form.value.content,
       image: this.artist_form.value.image,
-      post_image: this.artist_form.value.post_image
+      post_image: this.artist_form.value.post_image,
+      autor: this.adminUserName,
+      draft: draft
     }
-    console.log('image ' + typeof artist.image)
-    console.log('image ' + typeof artist.post_image)
-    this.postService.addArtist(artist.title, artist.content, artist.image, artist.post_image);
+    this.postService.addArtist(artist.title, artist.content, artist.image, artist.post_image, artist.autor, artist.draft);
+    this.artist_form.reset();
+  }
+
+  updatePost(draft: string){
+    let artist = {
+      title: this.artist_form.value.title,
+      content: this.artist_form.value.content,
+      image: this.artist_form.value.image,
+      post_image: this.artist_form.value.post_image,
+      autor: this.adminUserName,
+      draft: draft
+    }
+    this.postService.updatePost(+this.currentPostId, artist.title, artist.content, artist.image, artist.post_image, artist.draft);
+  }
+
+  deletePost(id: number){
+    this.postService.deletePost(id);
+    this.router_.navigate(['/admin-panel/all-posts']);
   }
 }

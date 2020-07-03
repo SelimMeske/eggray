@@ -31,18 +31,19 @@ import { Subscription } from 'rxjs';
 export class NavigationComponent implements OnInit {
   
   @Input() adminName;
-  
-  menu_links: string[] = [
-    'home',
-    'artists',
-    'content',
-    'albums',
-    'about'
+  @Output() oc_menu_output = false;
+
+  menu_links = [
+    {text: 'home', link: ''},
+    {text: 'artists', link: '/artists'},
+    {text: 'content', link: ''},
+    {text: 'albums', link: ''},
+    {text: 'about', link: ''}
   ]
 
   sticky_nav = false;
   oc_menu: boolean = false;
-  @Output() oc_menu_output = false;
+  
   constructor() { }
 
   ngOnInit(): void {
@@ -54,12 +55,14 @@ export class NavigationComponent implements OnInit {
         this.sticky_nav = true;
       }
     });
+
+    console.log(this.oc_menu)
     
   }
   
   toggle_mobile_menu(){
     this.oc_menu = !this.oc_menu;
-    this. oc_menu_output = this.oc_menu;
+    this.oc_menu_output = this.oc_menu;
   }
   
 }

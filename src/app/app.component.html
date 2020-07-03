@@ -1,3 +1,4 @@
 <app-navigation [adminName]="adminName" *ngIf='!inBackend'></app-navigation>
 <router-outlet></router-outlet>
-
+<app-notification *ngIf='inBackend'></app-notification>
+<app-footer *ngIf='!inBackend'></app-footer>

@@ -1,9 +1,11 @@
-<app-navigation-mobile id="nav-mobile" [oc_menu]="oc_menu_output" [@openClose]="oc_menu ? 'open' : 'closed'" ></app-navigation-mobile>
+<app-navigation-mobile (oc__menu)="toggle_mobile_menu()" id="nav-mobile" [oc_menu]="oc_menu_output" [@openClose]="oc_menu ? 'open' : 'closed'" ></app-navigation-mobile>
 <div style="height: 55px; z-index: -1;" class="invisible-div-helper"></div>
 <div style="position: fixed; top: 55px; left:0;" *ngIf="adminName" class="admin-bar flex"><p>Welcome {{adminName}}, go to <strong class="backend-link" routerLink="/admin">backend.</strong></p></div>
 <div class="flex">
-    <div *ngFor="let item of menu_links" class="nav-menu-full">{{ item }}</div>
-    <div class="nav-menu-small">
-        <app-ham-menu (click)="toggle_mobile_menu()"></app-ham-menu>
+    <div class="pusher flex">
+        <div *ngFor="let item of menu_links" class="nav-menu-full" routerLink="{{item.link}}">{{ item.text }}</div>
+        <div class="nav-menu-small">
+            <app-ham-menu (click)="toggle_mobile_menu()"></app-ham-menu>
+        </div>
     </div>
 </div>

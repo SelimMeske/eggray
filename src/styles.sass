@@ -17,7 +17,14 @@ body
     height: 100%
     color: var(--primary-font)
     font-size: 17px
-    
+    background: var(--primary-background)
+.pusher
+    width: 45% !important    
+
+.separator
+    height: 2px
+    width: 100%
+    background: linear-gradient(to right, #f9ba2625, #f9ba267a, #f9ba26bd, #f9b826, #f9ba26bd, #f9ba267a, #f9ba2625)    
 .flex
     display: -webkit-box
     display: -webkit-flex
@@ -38,12 +45,35 @@ button
     transition-duration: 1s
     box-shadow: 0 0px 0px black
 button:hover
-    box-shadow: 0 1px 1px rgba(0,0,0,0.11), 0 2px 2px rgba(0,0,0,0.11), 0 4px 4px rgba(0,0,0,0.11), 0 8px 8px rgba(0,0,0,0.11), 0 16px 16px rgba(0,0,0,0.11), 0 32px 32px rgba(0,0,0,0.11) 
+    //box-shadow: 0 1px 1px rgba(0,0,0,0.11), 0 2px 2px rgba(0,0,0,0.11), 0 4px 4px rgba(0,0,0,0.11), 0 8px 8px rgba(0,0,0,0.11), 0 16px 16px rgba(0,0,0,0.11), 0 32px 32px rgba(0,0,0,0.11) 
     cursor: pointer            
-.add-img-btn
+.backend-btn
     background: #3777FF
     border: 1px solid #3777FF
 .add-img-btn:hover
-    box-shadow: 0 0px 0px black           
-                
-        
+    box-shadow: 0 0px 0px black   
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+div:focus
+    outline: none
+/* width */
+::-webkit-scrollbar 
+  width: 10px
+
+/* Track */
+::-webkit-scrollbar-track 
+  background: #f1f1f1
+
+/* Handle */
+::-webkit-scrollbar-thumb 
+  background: #888
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover 
+  background: #555
+@media only screen and (max-width: 600px)
+    .pusher
+        width: 100% !important

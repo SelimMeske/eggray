@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AdminService {
   userToken: string;
   adminUserName = new Subject<string>();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService) { }
 
   login(name: string, password: string){
 
@@ -34,6 +35,7 @@ export class AdminService {
         this.tokenTimer(timeoutTime);
         this.saveToLocal(response.token, new Date(current_time), response.userName);
         this.router.navigate(['/admin-panel']);
+        this.notificationService.pushNotification(response.message);
       }
     });
   }
@@ -45,7 +47,6 @@ export class AdminService {
   createUser(name: string, password: string){
 
     this.http.post(this.env.SERVER_URL + 'users', {name: name, password: password}).subscribe(response => {
-      console.log(response);
     }); 
   }
 
@@ -56,10 +57,10 @@ export class AdminService {
   }
 
   logout(){
-    console.log('Logout')
     this.userAuthorised = false;
     this.clearFromLocal();
     this.router.navigate(['/admin']);
+    this.notificationService.pushNotification('You are logged out.')
   }
 
   saveToLocal(token: string, time: Date, user: string){

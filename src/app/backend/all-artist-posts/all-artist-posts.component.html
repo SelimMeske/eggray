@@ -1,0 +1,14 @@
+<div class="flex" style="flex-direction: column; margin-top: 30px;">
+    <div class="flex">
+        <div class="col"><strong>Artist name</strong></div>
+        <div class="col"><strong>Autor</strong></div>
+        <div class="col"><strong>Post date</strong></div>
+        <div class="col"><strong>Status</strong></div>
+    </div>
+    <div [routerLink]="['/admin-panel/post', post.id ]" *ngFor="let post of posts" class="flex single-post">
+        <div class="col">{{ post.name }}</div>
+        <div class="col">{{ post.autor }}</div>
+        <div class="col">22.05.2020</div>
+        <div class="col">{{ post.draft }}</div>
+    </div>
+</div>
