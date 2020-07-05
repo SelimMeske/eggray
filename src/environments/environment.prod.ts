@@ -1,4 +1,4 @@
-let NGROK_URL = 'http://4922f0d1a9f2.ngrok.io/api/';
+let NGROK_URL = 'http://7b8c51571fcd.ngrok.io/api/';
 let LOCALHOST_URL = 'http://localhost:3000/api/';
 export const environment = {
   production: true,

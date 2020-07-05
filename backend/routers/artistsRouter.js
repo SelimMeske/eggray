@@ -135,7 +135,7 @@ router.get('/', (req, res, next) => {
 
                 post.autor = findAutor.name;
 
-                let temporURL = 'http://4922f0d1a9f2.ngrok.io';
+                let temporURL = 'http://7b8c51571fcd.ngrok.io';
 
                 post.post_image = post.post_image.replace('http://localhost:3000', temporURL);
 

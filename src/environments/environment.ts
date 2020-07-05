@@ -1,7 +1,7 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-let NGROK_URL = 'http://4922f0d1a9f2.ngrok.io/api/';
+let NGROK_URL = 'http://7b8c51571fcd.ngrok.io/api/';
 let LOCALHOST_URL = 'http://localhost:3000/api/';
 export const environment = {
   production: false,

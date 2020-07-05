@@ -8,7 +8,7 @@
 /bazel-out
 
 # Backend 
-/backend
+backend/
 
 # dependencies
 /node_modules
